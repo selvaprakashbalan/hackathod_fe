@@ -1,0 +1,43 @@
+<section id="menu-bar">
+    <div class="nav-bar">
+        <div class="logo">
+        <img class="logo-img" src="../../assets/logo.png" alt="">
+        <span class="header">FinPro</span>
+        </div>
+        <div class="search">
+            <input class="input-box" type="text" pInputText placeholder="Search" />
+            <p-button *ngIf="roleResponse == 1" class="btn" label="Create Project" (click)="showDialog()"></p-button>
+            <p-button *ngIf="roleResponse == 2" class="btn" label="Create Task" (click)="showDialog()"></p-button>
+            <span>{{modifiedValue}}</span>
+            <p-dialog class="dialog" header="Create Project" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+                <div class="form-wrapper" [formGroup] = "projectForm">
+                    <div class="form">
+                        <label class="label">Project Name</label>
+                        <input class="input-box" type="text" pInputText  placeholder="Project Name" formControlName="proName"/>
+                    </div>
+                    <div class="form">
+                        <label class="label">Team</label>
+                        <p-dropdown  [options]="tLList" optionValue="id" optionLabel="name" placeholder="Team" formControlName="tlId" />
+                    </div>
+                    <div class="form">
+                        <label class="label">Project Manager</label>
+                        <p-dropdown  [options]="pmoList" optionValue="id" optionLabel="name" placeholder="Project Manager" formControlName="proId" />
+                    </div>
+                    <div class="form">
+                        <label class="label">Team Members</label>
+                        <p-multiSelect  [options]="empList" optionValue="id" class="input-box" optionLabel="name" placeholder="Team Members" formControlName="empId" />
+                    </div>
+                    <div class="form img">
+                             <img class="logo" src="../../assets/uploaded.jpg" alt="">
+                             <span>upload image</span>
+                    </div>
+                </div>
+                <div class="footer">
+                    <p-button label="Cancel" (click)="visible = false" />
+                    <p-button label="Save" (click)="saveProject()" />
+                </div>
+            </p-dialog>
+        </div>
+    </div>
+
+</section>
