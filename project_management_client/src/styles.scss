@@ -1,1 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+    margin: 0px;
+}
+#login {
+
+    .input-box {
+        width: 310px;
+        height: 45px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    .p-element .p-icon-wrapper {
+        top: 30%;
+    }
+
+    .p-button {
+        width: 310px !important;
+        height: 45px !important;
+        background-color: #800080;
+    }
+
+
+}
