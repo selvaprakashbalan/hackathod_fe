@@ -9,7 +9,9 @@ import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
-
+import { CalendarModule } from 'primeng/calendar';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 
 
 
@@ -26,7 +28,10 @@ import { ToastModule } from 'primeng/toast';
     DropdownModule,
     MultiSelectModule,
     ReactiveFormsModule,
-    ToastModule
+    ToastModule,
+    CalendarModule,
+    OverlayPanelModule,
+    ConfirmPopupModule
   ],
   exports: [
     CommonModule,
@@ -38,7 +43,10 @@ import { ToastModule } from 'primeng/toast';
     DropdownModule,
     MultiSelectModule,
     ReactiveFormsModule,
-    ToastModule
+    ToastModule,
+    CalendarModule,
+    OverlayPanelModule,
+    ConfirmPopupModule
   ]
 })
 export class SharedModule { }

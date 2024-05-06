@@ -2,30 +2,49 @@
     <div class="nav-bar">
         <div class="logo">
         <img class="logo-img" src="../../assets/logo.png" alt="">
-        <span class="header">FinPro</span>
+        <span class="header">Project Management</span>
         </div>
         <div class="search">
-            <input class="input-box" type="text" pInputText placeholder="Search" />
             <p-button *ngIf="roleResponse == 1" class="btn" label="Create Project" (click)="showDialog()"></p-button>
             <p-button *ngIf="roleResponse == 2" class="btn" label="Create Task" (click)="showDialog()"></p-button>
-            <span>{{modifiedValue}}</span>
-            <p-dialog class="dialog" header="Create Project" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+            <input class="input-box" type="text" pInputText placeholder="Search" />
+            <div class="logout" (click)="op.toggle($event)">
+                <span class="first-letter">{{modifiedValue}}</span>
+            </div>
+            <p-overlayPanel #op>
+                <span class="logOut-label" (click)="logout()">Log Out</span>
+            </p-overlayPanel>
+            <p-dialog class="dialog" header="Create Project" [modal]="true" [(visible)]="customProject" [style]="{ width: '25rem' }">
                 <div class="form-wrapper" [formGroup] = "projectForm">
-                    <div class="form">
-                        <label class="label">Project Name</label>
-                        <input class="input-box" type="text" pInputText  placeholder="Project Name" formControlName="proName"/>
+                    <div class="form-group">
+                        <div class="form">
+                            <label class="label">Project Name</label>
+                            <input class="input-box" type="text" pInputText  placeholder="Project Name" formControlName="proName"/>
+                        </div>
+                        <div class="form">
+                            <label class="label">Team</label>
+                            <p-dropdown  [options]="tLList" optionValue="id" optionLabel="name" placeholder="Team" formControlName="tlId" />
+                        </div>
                     </div>
-                    <div class="form">
-                        <label class="label">Team</label>
-                        <p-dropdown  [options]="tLList" optionValue="id" optionLabel="name" placeholder="Team" formControlName="tlId" />
+                    <div class="form-group">
+                        <div class="form">
+                            <label class="label">Project Manager</label>
+                            <p-dropdown  [options]="pmoList" optionValue="id" optionLabel="name" placeholder="Project Manager" formControlName="pmoId" />
+                        </div>
+                        <div class="form">
+                            <label class="label">Team Members</label>
+                            <p-multiSelect  [options]="empList" optionValue="id" class="input-box" optionLabel="name" placeholder="Team Members" formControlName="empId" />
+                        </div>
                     </div>
-                    <div class="form">
-                        <label class="label">Project Manager</label>
-                        <p-dropdown  [options]="pmoList" optionValue="id" optionLabel="name" placeholder="Project Manager" formControlName="proId" />
-                    </div>
-                    <div class="form">
-                        <label class="label">Team Members</label>
-                        <p-multiSelect  [options]="empList" optionValue="id" class="input-box" optionLabel="name" placeholder="Team Members" formControlName="empId" />
+                    <div class="form-group">
+                        <div class="form">
+                            <label class="label">Start Date</label>
+                            <p-calendar [showIcon]="true" inputId="icondisplay" placeholder="Start Date" formControlName="startDate" />
+                        </div>
+                        <div class="form">
+                            <label class="label">Due Date</label>
+                            <p-calendar [showIcon]="true" inputId="icondisplay" placeholder="Due Date" formControlName="dueDate" />
+                        </div>
                     </div>
                     <div class="form img">
                              <img class="logo" src="../../assets/uploaded.jpg" alt="">
@@ -33,10 +52,30 @@
                     </div>
                 </div>
                 <div class="footer">
-                    <p-button label="Cancel" (click)="visible = false" />
+                    <p-button label="Cancel" (click)="cancelForm()" />
                     <p-button label="Save" (click)="saveProject()" />
                 </div>
             </p-dialog>
+        </div>
+    </div>
+    <div class="body">
+        <div *ngFor="let pro of projectDetails">
+            <div class="card" (click)="editForm(pro.id)">
+                <div class="pro-logo">
+                    <img class="logo-img" src="../../assets/proLogo.png" alt="">
+                    <span class="header">{{pro.proName}}</span>
+                </div>
+                <div class="form-group">
+                    <div class="form">
+                        <label class="label">Team</label>
+                        <span class="value">{{pro.tlName}}</span>
+                    </div>
+                    <div class="form">
+                        <label class="label">PMO</label>
+                        <span class="value">{{pro.pmoName}}</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

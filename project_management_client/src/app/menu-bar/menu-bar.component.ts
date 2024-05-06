@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ServiceService } from '../service/service.service';
 import { ApiList } from '../core/variables/api-list';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import * as moment from 'moment'; 
+import { UtilService } from '../core/util/util.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -12,11 +16,14 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class MenuBarComponent {
 
   projectForm: FormGroup
-  visible: boolean = false;
+  customProject: boolean = false;
+  editProjectForm: boolean = false;
+  saveData: any;
 
   empList: any[] = []
   pmoList: any[] = []
   tLList: any[] = []
+  projectDetails: any[] = []
   
   roleResponse!: number
   modifiedValue!: string
@@ -25,13 +32,17 @@ export class MenuBarComponent {
   constructor(
     private apiService: ServiceService,
     private fb: FormBuilder,
+    private router: Router,
+    private utilService: UtilService
   ) {
 
     this.projectForm = this.fb.group({
       proName: [''],
       tlId: [''],
-      proId: [''],
+      pmoId: [''],
       empId: [''],
+      startDate: [''],
+      dueDate: [''],
     })
 
   }
@@ -52,6 +63,7 @@ export class MenuBarComponent {
     }
     
     this.getMasterList();
+    this.getProjectDetails();
   }
 
   getMasterList() {
@@ -68,13 +80,67 @@ export class MenuBarComponent {
 
 
   showDialog() {
-    this.visible = true;
+    this.customProject = true;
     this.projectForm.reset();
   }
 
   saveProject() {
     let data = this.projectForm.value
+    data.startDate = moment(data.startDate).format('YYYY-MM-DD');
+    data.dueDate = moment(data.dueDate).format('YYYY-MM-DD');
     console.log('data',data);
+    this.apiService.post(ApiList.projectSaveData,data).subscribe({
+      next:(res: any) => {
+        if(res.status) {
+          this.utilService.showSuccess(res.message)
+          this.customProject = false;
+          this.projectForm.reset();
+          this.getProjectDetails();
+        }
+      }, error: (err: HttpErrorResponse) => {
+        this.utilService.showError(err.error.message)
+      }
+    })
+  }
+
+  logout() {
+    this.router.navigate(['']);
+  }
+
+  getProjectDetails() {
+    this.apiService.get(ApiList.getProjectDetails).subscribe({
+      next:(res:any) => {
+        if(res.status) {
+          this.projectDetails = res.data
+          console.log('this.projectDetails',this.projectDetails);
+        }
+      }, error: (err: HttpErrorResponse) => {
+        this.utilService.showError(err.error.message)
+      }
+    })
+  }
+
+  editForm(id: number) {
+    console.log('id',id);
+    console.log('this.projectDetails',this.projectDetails);
+    const projectToEdit = this.projectDetails.find(project => project.id === id);
+    if (projectToEdit) {
+      this.editProjectForm = true;
+      this.customProject = true;
+      this.projectForm.patchValue({
+        proName: projectToEdit.proName,
+        startDate:  moment(projectToEdit.startDate).format('DD/MM/YYYY'),
+        dueDate:  moment(projectToEdit.dueDate).format('DD/MM/YYYY'),
+        tlId: projectToEdit.tlId,
+        pmoId: projectToEdit.pmoId,
+        empId: projectToEdit.empId,
+      });
+      console.log('this.projectForm',this.projectForm.value);
+    } 
+  }
+
+  cancelForm() {
+    this.customProject = false;
   }
 
 }

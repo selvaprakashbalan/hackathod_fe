@@ -8,6 +8,14 @@
     background-color: #800080;
 }
 
+.p-overlaypanel .p-overlaypanel-content {
+    font-size: 16px;
+    font-weight: 600;
+    color: #720e9e;
+    cursor: pointer;
+
+}
+
 #login {
 
     .p-inputtext {
@@ -31,8 +39,8 @@
 
 #menu-bar {
     .p-dialog {
-        width: 50% !important;
-        height: 80%;
+        width: 45% !important;
+        height: 70%;
 
         .p-dialog-title {
             font-size: 26px;
@@ -51,7 +59,7 @@
             }
 
             .p-inputwrapper {
-                width: 877px;
+                width: 381px;
                 height: 40px;
             }
 
@@ -59,9 +67,16 @@
                 font-size: 12px;
                 font-weight: 500;
             }
+
+            .p-calendar {
+                width: 100%;
+            }
+
+            .p-calendar-w-btn .p-inputtext  {
+                cursor: pointer;
+            }
         }
     }
-
-
-
 }
+
+
