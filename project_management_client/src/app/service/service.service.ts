@@ -21,5 +21,9 @@ export class ServiceService {
     return this.http.get(this.apiUrl + endpoint);
   }
 
+  getById(endpoint: string, id: number) {
+    return this.http.get(`${this.apiUrl}${endpoint}/${id}`);
+}
+
   
 }

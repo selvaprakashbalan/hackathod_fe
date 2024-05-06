@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { ServiceService } from '../service/service.service';
 import { ApiList } from '../core/variables/api-list';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -24,8 +24,10 @@ export class MenuBarComponent {
   pmoList: any[] = []
   tLList: any[] = []
   projectDetails: any[] = []
+  pmoProjectDetails: any
   
   roleResponse!: number
+  id!: number
   modifiedValue!: string
   storedValue!: any
 
@@ -56,14 +58,18 @@ export class MenuBarComponent {
     const storedValue = localStorage.getItem('roleResponse');
     if (storedValue !== null) {
       const parsedValue = JSON.parse(storedValue);
-      this.roleResponse = parsedValue[0].roleId;
-      this.modifiedValue = parsedValue.map((item: { name: string; }) => {
-        return item.name.charAt(0);
-      })[0];    
+      if (Array.isArray(parsedValue)) {
+        this.roleResponse = parsedValue[0]?.roleId;
+        this.id = parsedValue[0]?.id;
+        this.modifiedValue = parsedValue.map((item: { name: string; }) => {
+          return item.name.charAt(0);
+        })[0];
+      }
     }
     
     this.getMasterList();
     this.getProjectDetails();
+    this.getPmoProjectDetails(this.id);
   }
 
   getMasterList() {
@@ -112,7 +118,19 @@ export class MenuBarComponent {
       next:(res:any) => {
         if(res.status) {
           this.projectDetails = res.data
-          console.log('this.projectDetails',this.projectDetails);
+        }
+      }, error: (err: HttpErrorResponse) => { 
+        this.utilService.showError(err.error.message)
+      }
+    })
+  }
+
+
+  getPmoProjectDetails(id: number){
+    this.apiService.getById(ApiList.getPmoProjectDetails,id).subscribe({
+      next:(res:any) => {
+        if(res.status) {
+          this.pmoProjectDetails = res.data
         }
       }, error: (err: HttpErrorResponse) => {
         this.utilService.showError(err.error.message)
@@ -121,8 +139,6 @@ export class MenuBarComponent {
   }
 
   editForm(id: number) {
-    console.log('id',id);
-    console.log('this.projectDetails',this.projectDetails);
     const projectToEdit = this.projectDetails.find(project => project.id === id);
     if (projectToEdit) {
       this.editProjectForm = true;
@@ -135,12 +151,16 @@ export class MenuBarComponent {
         pmoId: projectToEdit.pmoId,
         empId: projectToEdit.empId,
       });
-      console.log('this.projectForm',this.projectForm.value);
     } 
   }
 
   cancelForm() {
     this.customProject = false;
+  }
+
+  teamDetails(id: number) {
+    this.router.navigate(['pmo']);
+    localStorage.setItem('id',JSON.stringify(id));
   }
 
 }

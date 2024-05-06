@@ -8,13 +8,15 @@ import { SharedModule } from './shared/shared.module';
 import { MenuBarComponent } from './menu-bar/menu-bar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
+import { PmoHomeComponent } from './pmo-home/pmo-home.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    MenuBarComponent
+    MenuBarComponent,
+    PmoHomeComponent
   ],
   imports: [
     BrowserModule,

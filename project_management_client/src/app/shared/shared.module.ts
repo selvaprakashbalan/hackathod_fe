@@ -12,6 +12,8 @@ import { ToastModule } from 'primeng/toast';
 import { CalendarModule } from 'primeng/calendar';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { TableModule } from 'primeng/table';
 
 
 
@@ -31,7 +33,9 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
     ToastModule,
     CalendarModule,
     OverlayPanelModule,
-    ConfirmPopupModule
+    ConfirmPopupModule,
+    InputTextareaModule,
+    TableModule
   ],
   exports: [
     CommonModule,
@@ -46,7 +50,9 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
     ToastModule,
     CalendarModule,
     OverlayPanelModule,
-    ConfirmPopupModule
+    ConfirmPopupModule,
+    InputTextareaModule,
+    TableModule
   ]
 })
 export class SharedModule { }
