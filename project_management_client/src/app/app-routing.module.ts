@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { MenuBarComponent } from './menu-bar/menu-bar.component';
 import { PmoHomeComponent } from './pmo-home/pmo-home.component';
+import { EmployeeHomeComponent } from './employee-home/employee-home.component';
 
 const routes: Routes = [
   { path: '', 
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path: 'pmo',
     component: PmoHomeComponent
+  },
+  {
+    path: 'employee',
+    component: EmployeeHomeComponent
   }
 ];
 

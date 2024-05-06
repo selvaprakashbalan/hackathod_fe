@@ -12,7 +12,7 @@
             <p-overlayPanel #op>
                 <span class="logOut-label" (click)="logout()">Log Out</span>
             </p-overlayPanel>
-            <p-dialog class="dialog" header="Create Task" [modal]="true" [(visible)]="customTaskForm" [style]="{ width: '25rem' }">
+            <!-- <p-dialog class="dialog" header="Create Task" [modal]="true" [(visible)]="customTaskForm" [style]="{ width: '25rem' }">
                 <div class="form-wrapper" [formGroup] = "taskForm">
                     <div class="form-group">
                         <div class="form">
@@ -47,50 +47,62 @@
                     <p-button label="Cancel" (click)="cancelForm()" />
                     <p-button label="Save" (click)="taskSaveData()" />
                 </div>
-            </p-dialog>
+            </p-dialog> -->
         </div>
     </div>
     <div class="body grid">
         <div class="col-3"> 
-            <div *ngFor="let team of teamDetails">
-                <div class="card" (click)="createTask()" >
-                    <div class="pro-logo">
-                        <img class="logo-img" src="../../assets/proLogo.png" alt="">
-                        <span class="header">{{team.proName}}</span>
-                    </div>
-                    <div class="form-group">
-                        <div class="form">
-                            <label class="label">Team</label>
-                            <span class="value">{{team.tlName}}</span>
+            <div class="task-body"> 
+                <div *ngFor="let team of teamDetails">
+                    <div class="card">
+                        <div class="pro-logo">
+                            <img class="logo-img" src="../../assets/proLogo.png" alt="">
+                            <span class="header">{{team.proName}}</span>
                         </div>
-                        <div class="form" >
-                            <label class="label">Team Members</label>
-                            <span class="members" *ngFor="let member of team.teamMembers">
-                                <span class="value">{{ member.name }}</span>
-                                <span class="designation">{{ member.designation }}</span>
-                            </span>
+                        <div class="form-group">
+                            <div class="form">
+                                <label class="label">Team</label>
+                                <span class="value">{{team.tlName}}</span>
+                            </div>
+                            <div class="form" >
+                                <label class="label">Team Members</label>
+                                <span class="members" *ngFor="let member of team.teamMembers">
+                                    <span class="value">{{ member.name }}</span>
+                                    <span class="designation">{{ member.designation }}</span>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-9">
-            <div class="task-body"> 
-                <div class="task-card" *ngFor="let task of taskDetails">
-                    <div class="header">
-                        <span class="name">{{task.empName}}</span>
-                    </div>
-                    <div class="task-wrapper">
-                       <span class="task">{{task.task}}</span>
-                       <span class="description">{{task.description}}</span>
-                    </div>
-                    <div class="footer" >
-                      <span  [ngClass]="{'todo': task.progressId === 2, 'completed': task.progressId === 1}">{{task.progress}}</span>
-                      <span [ngClass]="{'highest': task.priorityId === 1, 'high': task.priorityId === 2,'low': task.priorityId === 3,'lowest': task.priorityId === 4}">{{task.priority}}</span>
-                      <span>{{task.dueDate | date: 'dd, MMM yyyy'}}</span>
-                    </div>
-             </div>
-            </div>
+            <p-table [columns]="cols" [value]="taskDetails" [tableStyle]="{ 'min-width': '50rem' }" selectionMode="single">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns">
+                            {{ col.header }}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr (click)="openDialog(rowData.id)">
+                        <td *ngFor="let col of columns">
+                           <span>{{ rowData[col.field] }}</span> 
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
         </div>
     </div>
 </section>
+
+<div id="dialog">
+    <p-dialog class="dialog" header="Task completed" [modal]="true" [(visible)]="customDialog" [style]="{ width: '25rem' }">
+        <div class="footer">
+            <p-button label="Cancel" (click)="cancelForm()" />
+            <p-button label="Save" (click)="saveProgressId()" />
+        </div>
+    </p-dialog>
+
+</div>

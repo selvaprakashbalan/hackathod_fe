@@ -6,6 +6,7 @@ import { ServiceService } from '../service/service.service';
 import { UtilService } from '../core/util/util.service';
 import { ApiList } from '../core/variables/api-list';
 import { HttpErrorResponse } from '@angular/common/http';
+import { roleList } from '../core/variables/enum';
 
 
 
@@ -36,8 +37,7 @@ export class LoginComponent {
   }
 
   ngOnInit() {
-    // this.login();
-   
+  
   }
 
 
@@ -53,7 +53,6 @@ export class LoginComponent {
         if (res.status) {
           this.roleResponse = res.data;
           localStorage.setItem('roleResponse',JSON.stringify(this.roleResponse));
-           console.log('JSON.stringify(this.roleResponse',JSON.stringify(this.roleResponse));
           this.utilService.showSuccess(res.message)
           this.router.navigate(['/menu']);
         } 

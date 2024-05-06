@@ -8,4 +8,7 @@ export enum ApiList {
     getPriorityList = '/login/getPriorityList',
     taskSaveData = '/login/taskSaveData',
     getTaskDetails = '/login/getTaskDetails',
+    getEmpProjectDetails = '/login/getEmpProjectDetails',
+    getEmpTaskDetails = '/login/getEmpTaskDetails',
+    saveProgressId = '/login/saveProgressId',
 }

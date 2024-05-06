@@ -79,4 +79,33 @@
     }
 }
 
+.p-datatable-wrapper {
+    border-radius: 20px;
+}
+.p-datatable-thead > tr > th {
+    font-size: 16px;
+    font-weight: 600;
+    color: #720e9e;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+    color: #51087E;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.p-datatable .p-datatable-tbody > tr {
+    cursor: pointer;
+}
+
+#dialog {
+    .p-dialog {
+        .footer {
+            display: flex;
+            justify-content: end;
+            gap: 10px;
+        } 
+    }
+}
+
 

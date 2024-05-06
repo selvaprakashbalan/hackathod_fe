@@ -14,6 +14,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { TableModule } from 'primeng/table';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 
@@ -35,7 +36,8 @@ import { TableModule } from 'primeng/table';
     OverlayPanelModule,
     ConfirmPopupModule,
     InputTextareaModule,
-    TableModule
+    TableModule,
+    ConfirmDialogModule
   ],
   exports: [
     CommonModule,
@@ -52,7 +54,8 @@ import { TableModule } from 'primeng/table';
     OverlayPanelModule,
     ConfirmPopupModule,
     InputTextareaModule,
-    TableModule
+    TableModule,
+    ConfirmDialogModule
   ]
 })
 export class SharedModule { }

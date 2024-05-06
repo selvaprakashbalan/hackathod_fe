@@ -97,4 +97,24 @@
             </div>
         </div>
     </div>
+    <div class="body" *ngIf="roleResponse == 3">
+        <div *ngFor="let pro of empProjectDetails">
+            <div class="card" (click)="taskDetails(pro.id)">
+                <div class="pro-logo">
+                    <img class="logo-img" src="../../assets/proLogo.png" alt="">
+                    <span class="header">{{pro.proName}}</span>
+                </div>
+                <div class="form-group">
+                    <div class="form">
+                        <label class="label">Team</label>
+                        <span class="value">{{pro.tlName}}</span>
+                    </div>
+                    <div class="form">
+                        <label class="label">PMO</label>
+                        <span class="value">{{pro.pmoName}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>

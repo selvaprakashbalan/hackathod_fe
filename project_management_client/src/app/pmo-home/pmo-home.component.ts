@@ -18,11 +18,12 @@ export class PmoHomeComponent {
   customTaskForm: boolean = false;
   taskForm: FormGroup
 
-  projectId: any;
+  proId: any;
   teamDetails: any;
   priorityList: any;
   teamMembers: any;
   taskDetails: any;
+  empId: any;
   
 
   constructor(
@@ -51,8 +52,16 @@ export class PmoHomeComponent {
 
 
   ngOnInit() { 
-    this.projectId = localStorage.getItem('id');
-    this.getTeamDetails(this.projectId)
+    const storedValue = localStorage.getItem('data');
+
+    if (storedValue !== null) {
+      const parsedValue = JSON.parse(storedValue);
+      if (Array.isArray(parsedValue)) {
+        this.proId = parsedValue[0]?.proId;
+        this.empId = parsedValue[0]?.empId;
+      }
+    }
+    this.getTeamDetails(this.proId)
     this.getPriorityList();
     this.getTaskDetails(); 
   }
@@ -105,15 +114,16 @@ export class PmoHomeComponent {
   taskSaveData() {
     let data = this.taskForm.value
     data['progressId'] = 2;
-    data['proId'] = this.projectId;
+    data['proId'] = this.proId;
+    data['pmoId'] = this.empId;
     data['dueDate'] = moment(data.dueDate).format('YYYY-MM-DD');
-    console.log('data',data);
     this.apiService.post(ApiList.taskSaveData, data).subscribe({
       next:(res: any) => {
         if(res.status) {
           this.utilService.showSuccess(res.message)
           this.customTaskForm = false;
           this.taskForm.reset();
+          this.getTaskDetails();
         }
       }, error: (err: HttpErrorResponse) => {
         this.utilService.showError(err.error.message)
@@ -122,7 +132,7 @@ export class PmoHomeComponent {
   }
 
   getTaskDetails() {
-    this.apiService.getById(ApiList.getTaskDetails,this.projectId).subscribe({
+    this.apiService.getById(ApiList.getTaskDetails,this.proId).subscribe({
       next:(res:any) => {
         if(res.status) {
           this.taskDetails = res.data

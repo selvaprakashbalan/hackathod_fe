@@ -25,6 +25,7 @@ export class MenuBarComponent {
   tLList: any[] = []
   projectDetails: any[] = []
   pmoProjectDetails: any
+  empProjectDetails: any
   
   roleResponse!: number
   id!: number
@@ -56,6 +57,7 @@ export class MenuBarComponent {
 
   ngOnInit() {
     const storedValue = localStorage.getItem('roleResponse');
+    console.log('storedValue',storedValue);
     if (storedValue !== null) {
       const parsedValue = JSON.parse(storedValue);
       if (Array.isArray(parsedValue)) {
@@ -70,6 +72,7 @@ export class MenuBarComponent {
     this.getMasterList();
     this.getProjectDetails();
     this.getPmoProjectDetails(this.id);
+    this.getEmpProjectDetails(this.id);
   }
 
   getMasterList() {
@@ -138,6 +141,18 @@ export class MenuBarComponent {
     })
   }
 
+  getEmpProjectDetails(id: number){
+    this.apiService.getById(ApiList.getEmpProjectDetails,id).subscribe({
+      next:(res:any) => {
+        if(res.status) {
+          this.empProjectDetails = res.data
+        }
+      }, error: (err: HttpErrorResponse) => {
+        this.utilService.showError(err.error.message)
+      }
+    })
+  }
+
   editForm(id: number) {
     const projectToEdit = this.projectDetails.find(project => project.id === id);
     if (projectToEdit) {
@@ -159,8 +174,25 @@ export class MenuBarComponent {
   }
 
   teamDetails(id: number) {
+    let data = [
+      {
+        proId: id,
+        empId: this.id
+      }
+    ]
+    localStorage.setItem('data',JSON.stringify(data));
     this.router.navigate(['pmo']);
-    localStorage.setItem('id',JSON.stringify(id));
+  }
+
+  taskDetails(id: number) {
+    let data = [
+      {
+        proId: id,
+        empId: this.id
+      }
+    ]
+    localStorage.setItem('data',JSON.stringify(data));
+    this.router.navigate(['employee']);
   }
 
 }
