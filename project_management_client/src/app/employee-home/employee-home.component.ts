@@ -48,7 +48,7 @@ export class EmployeeHomeComponent {
     }
 
     this.getTeamDetails(this.proId);
-    this.getEmpTaskDetails(this.empId);
+    this.getEmpTaskDetails(this.empId,this.proId);
   }
 
   logout() {
@@ -74,8 +74,8 @@ export class EmployeeHomeComponent {
     })
   }
 
-  getEmpTaskDetails(id: number) {
-    this.apiService.getById(ApiList.getEmpTaskDetails,id).subscribe({
+  getEmpTaskDetails(id: number,proId: number) {
+    this.apiService.getByIds(ApiList.getEmpTaskDetails,id,proId).subscribe({
       next:(res:any) => {
         if(res.status) {
           this.taskDetails = res.data

@@ -23,7 +23,11 @@ export class ServiceService {
 
   getById(endpoint: string, id: number) {
     return this.http.get(`${this.apiUrl}${endpoint}/${id}`);
-}
+  }
+
+  getByIds(endpoint: string, id: number,proId: number) {
+    return this.http.get(`${this.apiUrl}${endpoint}/${id}/${proId}`);
+  }
 
   
 }
