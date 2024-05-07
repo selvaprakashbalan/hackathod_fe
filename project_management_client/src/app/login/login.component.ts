@@ -30,7 +30,7 @@ export class LoginComponent {
   ) { 
 
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required]],
       pass: ['', [Validators.required]]
     });
 
@@ -40,13 +40,15 @@ export class LoginComponent {
   
   }
 
-
   get form() {
     return this.loginForm.controls;
   }
 
 
   login() {
+    if(this.loginForm.invalid)   {
+      return this.loginForm.markAllAsTouched();
+    }
     const data = this.loginForm.value
     this.apiService.post(ApiList.login, data).subscribe({
       next:(res: any) =>  {

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import * as moment from 'moment'; 
 import { UtilService } from '../core/util/util.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { IMaster } from '../core/variables/interface';
 
 
 @Component({
@@ -18,11 +19,10 @@ export class MenuBarComponent {
   projectForm: FormGroup
   customProject: boolean = false;
   editProjectForm: boolean = false;
-  saveData: any;
 
-  empList: any[] = []
-  pmoList: any[] = []
-  tLList: any[] = []
+  empList: Array<IMaster> = [];
+  pmoList: Array<IMaster> = [];
+  tLList: Array<IMaster> = [];
   projectDetails: any[] = []
   pmoProjectDetails: any
   empProjectDetails: any
@@ -31,6 +31,9 @@ export class MenuBarComponent {
   id!: number
   modifiedValue!: string
   storedValue!: any
+
+  currentDate = new Date();
+  startedDate!: any;
 
   constructor(
     private apiService: ServiceService,
@@ -57,7 +60,6 @@ export class MenuBarComponent {
 
   ngOnInit() {
     const storedValue = localStorage.getItem('roleResponse');
-    console.log('storedValue',storedValue);
     if (storedValue !== null) {
       const parsedValue = JSON.parse(storedValue);
       if (Array.isArray(parsedValue)) {
@@ -78,11 +80,11 @@ export class MenuBarComponent {
   getMasterList() {
     this.apiService.get(ApiList.getMasterList).subscribe({
       next:(res:any) => {
-        if(res.status) {
-          this.empList = res.data.empList
-          this.pmoList = res.data.pmoList
-          this.tLList = res.data.tLList
-        }
+      if(res.status) {
+      this.empList = res.data.empList
+      this.pmoList = res.data.pmoList
+      this.tLList = res.data.tLList
+      }
       }
     })
   }
@@ -97,7 +99,6 @@ export class MenuBarComponent {
     let data = this.projectForm.value
     data.startDate = moment(data.startDate).format('YYYY-MM-DD');
     data.dueDate = moment(data.dueDate).format('YYYY-MM-DD');
-    console.log('data',data);
     this.apiService.post(ApiList.projectSaveData,data).subscribe({
       next:(res: any) => {
         if(res.status) {
@@ -193,6 +194,10 @@ export class MenuBarComponent {
     ]
     localStorage.setItem('data',JSON.stringify(data));
     this.router.navigate(['employee']);
+  }
+
+  event(event: Event) {
+    this.startedDate = event;
   }
 
 }

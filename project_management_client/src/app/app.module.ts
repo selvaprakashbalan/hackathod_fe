@@ -29,7 +29,7 @@ const ngsUiLoader: NgxUiLoaderConfig = {
     LoginComponent,
     MenuBarComponent,
     PmoHomeComponent,
-    EmployeeHomeComponent
+    EmployeeHomeComponent,
   ],
   imports: [
     BrowserModule,

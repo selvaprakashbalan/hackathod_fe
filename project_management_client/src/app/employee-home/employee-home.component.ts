@@ -23,6 +23,7 @@ export class EmployeeHomeComponent {
 
   cols = [
     { field: 'task', header: 'Task' },
+    { field: 'description', header: 'Description' },
     { field: 'assigned', header: 'Assigned By' },
     { field: 'dueDate', header: 'Due Date' },
     { field: 'priority', header: 'Priority' },
@@ -86,9 +87,11 @@ export class EmployeeHomeComponent {
     })
   }
 
-  openDialog(id: number) {
-    this.customDialog = true;
-    this.statusId = id
+  openDialog(data:any) {
+    if(data.progress == 'To Do') {
+      this.customDialog = true;
+    }
+    this.statusId = data.id
     
   }
 
@@ -97,6 +100,7 @@ export class EmployeeHomeComponent {
      next:(res:any) => {
        if(res.status) {
          this.customDialog = false;
+         this.utilService.showSuccess(res.message)
          this.ngOnInit();
        }
      }, error: (err: HttpErrorResponse) => {

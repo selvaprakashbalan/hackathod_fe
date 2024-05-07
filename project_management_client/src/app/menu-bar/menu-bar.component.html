@@ -38,17 +38,17 @@
                     <div class="form-group">
                         <div class="form">
                             <label class="label">Start Date</label>
-                            <p-calendar [showIcon]="true" inputId="icondisplay" placeholder="Start Date" formControlName="startDate" />
+                            <p-calendar [showIcon]="true" inputId="icondisplay" placeholder="Start Date" formControlName="startDate" [minDate]="currentDate" (ngModelChange)="event($event)"/>
                         </div>
                         <div class="form">
                             <label class="label">Due Date</label>
-                            <p-calendar [showIcon]="true" inputId="icondisplay" placeholder="Due Date" formControlName="dueDate" />
+                            <p-calendar [showIcon]="true" inputId="icondisplay" placeholder="Due Date" formControlName="dueDate" [minDate]="startedDate" />
                         </div>
                     </div>
-                    <div class="form img">
+                    <!-- <div class="form img">
                              <img class="logo" src="../../assets/uploaded.jpg" alt="">
                              <span>upload image</span>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="footer">
                     <p-button label="Cancel" (click)="cancelForm()" />

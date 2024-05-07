@@ -37,7 +37,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     ConfirmPopupModule,
     InputTextareaModule,
     TableModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
   ],
   exports: [
     CommonModule,
@@ -55,7 +55,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     ConfirmPopupModule,
     InputTextareaModule,
     TableModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
   ]
 })
 export class SharedModule { }

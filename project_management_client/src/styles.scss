@@ -80,7 +80,8 @@
 }
 
 .p-datatable-wrapper {
-    border-radius: 20px;
+    border-radius: 10px;
+    margin-top: 10px;
 }
 .p-datatable-thead > tr > th {
     font-size: 16px;
@@ -108,4 +109,16 @@
     }
 }
 
+.p-calendar .p-datepicker  {
+    width: 300px !important;
+    height: 300px !important;
+}
+
+.p-datepicker table td {
+    padding: 0px;
+}
+
+.error-text {
+    color: red;
+}
 

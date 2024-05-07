@@ -86,9 +86,19 @@
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-rowData let-columns="columns">
-                    <tr (click)="openDialog(rowData.id)">
+                    <tr (click)="openDialog(rowData)">
                         <td *ngFor="let col of columns">
-                           <span>{{ rowData[col.field] }}</span> 
+                            <span *ngIf="col.field !== 'priority' && col.field !== 'progress'; else priorityProgress">
+                                {{ rowData[col.field] }}
+                            </span>
+                            <ng-template #priorityProgress>
+                                <span *ngIf="col.field === 'priority'" [ngClass]="{'highest': rowData[col.field] === 'Highest' , 'high': rowData[col.field] === 'High','low': rowData[col.field] === 'Low','lowest': rowData[col.field] === 'Lowest'}">
+                                    {{ rowData[col.field] }}
+                                </span>
+                                <span *ngIf="col.field === 'progress'"  [ngClass]="{'todo': rowData[col.field] === 'To Do', 'completed': rowData[col.field] === 'Completed'}">
+                                    {{ rowData[col.field] }}
+                                </span>
+                            </ng-template>
                         </td>
                     </tr>
                 </ng-template>
